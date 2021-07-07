@@ -25,6 +25,11 @@ const Navbar = () => {
                         </button></Link>
                     }
                 </div>
+                <div>
+                    <Link to="/consultas">
+                        Consultas
+                    </Link>
+                </div>
 
             </nav>
         </>

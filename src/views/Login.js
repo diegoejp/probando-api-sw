@@ -1,13 +1,14 @@
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 //import injectContext from "./store/appContext"
-import injectContext, { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 
 
 
 function Login() {
-    const { store, actions } = useContext(Context);
+    const {  actions } = useContext(Context);
     const [name, setName] = useState("");
     const [password, setPassword] = useState("")
     //const token = sessionStorage.getItem("token"); token en local
@@ -27,11 +28,14 @@ function Login() {
     } */
 
     function consultarUsuarios() {
-        actions.login(name, password)
+        actions.login(name,password,history)
+        
+        
+        
         
     };
 
-     if(store.token && store.token !== "" && store.token !== undefined) history.push("/");  
+     /* if(store.token && store.token !== "" && store.token !== undefined) history.push("/funciones");  */ 
 
     return (
         <>
@@ -39,14 +43,12 @@ function Login() {
                 <div className="row">
                     <div className="col-12">
                         <h1>Login</h1>
-                        {
-                            (store.token && store.token !== "" && store.token !== undefined) ? "You are logged in with this token " + store.token :
                                 <div>
                                     <input type="text" onChange={(e) => setName(e.target.value)} placeholder="User Name" />
                                     <input type="text" onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-                                    <button className="btn btn-primary" onClick={consultarUsuarios}>Iniciar sesión</button>
+                                    <Link to="/dashboard"><button className="btn btn-primary" onClick={consultarUsuarios}>Iniciar sesión</button></Link>
                                 </div>
-                        }
+                        
                     </div>
                 </div>
             </div>

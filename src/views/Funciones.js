@@ -7,7 +7,7 @@ const Funciones = ()=>{
     const store = useContext(Context);
     const history = useHistory();
 
-    if (store.token && store.token !== "" && store.token !== undefined) history.push("/");
+    if (store.token === null) {history.push("/");}
     return(
         <>
             <div className="container">
@@ -16,7 +16,7 @@ const Funciones = ()=>{
                         <h1>Funciones</h1>
                         <div>
                             {
-                                store.token!==null ?
+                                store.token ?
                             <ul className="list-group">
                                 <li className="list-group-item">Lorem, ipsum dolor.</li>
                                 <li className="list-group-item">Lorem, ipsum dolor.</li>

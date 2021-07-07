@@ -2,7 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       token : null,
-      planets : null
+      planets : null,
+      done : null
 
     },
     actions: {
@@ -11,7 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (token && token !== "" && token !== undefined) setStore({ token : token });
       },
 
-      login: async (name, password) => {
+      login: async (name, password,history) => {
         
         const opt = {
           method: "POST",
@@ -34,9 +35,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await response.json();
           console.log("This came from DB " + data.token)
-          sessionStorage.setItem("token", data.token)
-          setStore({token : data.token})
-          return true;
+          if (data.token) history.push("/dashboard")
+          if (data.token) sessionStorage.setItem("token", data.token)
+          if (data.token) sessionStorage.setItem("done", true)
+          if (data.token) setStore({token : data.token})
+          if (data.token) setStore({done : true})
+          
 
         }
         catch(error){
@@ -52,14 +56,19 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         fetch("http://127.0.0.1:5000/api/planets", opts)
           .then(resp => resp.json())
-          .then(data => setStore({ planets: data }))
+          .then(data => {
+            console.log(data)
+            setStore({ planets: data })})
           .catch(error => console.log("Error loading message from backend", error))
       },
 
       logout: () => {
         sessionStorage.removeItem("token");
+        sessionStorage.removeItem("done");
         console.log("Log out");
-        setStore({token : null});
+        setStore({ token: null });
+        setStore({ done: null });
+        setStore({ planets: null });
       }
      
     }
